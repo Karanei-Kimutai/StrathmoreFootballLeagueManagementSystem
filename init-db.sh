@@ -14,11 +14,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" -c "
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" -c "
     ALTER ROLE sports_league_owner WITH SUPERUSER;
-    ALTER DATABASE $POSTGRES_DB OWNER TO sports_league_owner;
-    GRANT ALL PRIVILEGES ON DATABASE $POSTGRES_DB TO sports_league_owner;
+    ALTER DATABASE \"$POSTGRES_DB\" OWNER TO sports_league_owner;
+    GRANT ALL PRIVILEGES ON DATABASE \"$POSTGRES_DB\" TO sports_league_owner;
 "
 
 # Set search_path for the database
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" -c "
-    ALTER DATABASE $POSTGRES_DB SET search_path TO public;
-" 
+    ALTER DATABASE \"$POSTGRES_DB\" SET search_path TO public;
+"

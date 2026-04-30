@@ -1,21 +1,28 @@
 {% extends "layout.html" %}
-{% block title %}User Dashboard - Sports League Management{% endblock %}
+{% block title %}University Football League{% endblock %}
 {% block content %}
 <div class="container">
-    <h1 class="mt-4">User Dashboard</h1>
+    <h1 class="mt-4">University Football League</h1>
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
-                <a href="{{ url_for('user.user_dashboard') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="{{ url_for('user.user_dashboard') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_dashboard' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('user.user_teams') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_teams' %}active{% endif %}">Teams</a>
                 <a href="{{ url_for('user.user_players') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_players' %}active{% endif %}">Players</a>
-                <a href="{{ url_for('user.user_leagues') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_leagues' %}active{% endif %}">Leagues</a>
+                <a href="{{ url_for('user.user_leagues') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_leagues' %}active{% endif %}">League Table</a>
                 <a href="{{ url_for('user.user_matches') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_matches' %}active{% endif %}">Matches</a>
-                <a href="{{ url_for('user.user_scorers') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_scorers' %}active{% endif %}">Top Scorers</a>
+                <!-- <a href="{{ url_for('user.user_scorers') }}" class="list-group-item list-group-item-action {% if request.endpoint == 'user.user_scorers' %}active{% endif %}">Top Scorers</a> -->
             </div>
         </div>
         <div class="col-md-9">
-            {% block user_content %}{% endblock %}
+            {% block user_content %}
+            <div class="jumbotron bg-light">
+                <h2 class="display-5">Campus league centre</h2>
+                <p class="lead">Follow teams, fixtures, match results, the league table, and player performances.</p>
+                <a href="{{ url_for('user.user_leagues') }}" class="btn btn-primary">View League Table</a>
+                <a href="{{ url_for('user.user_matches') }}" class="btn btn-outline-primary">View Fixtures</a>
+            </div>
+            {% endblock %}
         </div>
     </div>
 </div>

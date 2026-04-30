@@ -52,7 +52,13 @@
             <img src="{{ match[7] }}" alt="{{ match[1] }} Logo" class="team-logo">
             <strong class="mx-2">{{ match[1] }}</strong>
         </a>
-        <span class="match-score-box mx-2">{{ match[3] }} - {{ match[4] }}</span>
+        <span class="match-score-box mx-2">
+            {% if match[3] is not none and match[4] is not none %}
+                {{ match[3] }} - {{ match[4] }}
+            {% else %}
+                Scheduled
+            {% endif %}
+        </span>
         <a href="{{ url_for('user.profile_team', team_id=match[14]) }}" class="d-flex align-items-center text-dark">
             <strong class="mx-2">{{ match[2] }}</strong>
             <img src="{{ match[8] }}" alt="{{ match[2] }} Logo" class="team-logo">
@@ -70,6 +76,36 @@
         </ul>
     {% else %}
         <p>No scores found.</p>
+    {% endif %}
+
+    <h2 class="mt-4">Player Stats</h2>
+    {% if player_stats %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                        <th>Yellow Cards</th>
+                        <th>Red Cards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in player_stats %}
+                    <tr>
+                        <td>{{ stat[0] }}</td>
+                        <td>{{ stat[2] }}</td>
+                        <td>{{ stat[3] }}</td>
+                        <td>{{ stat[4] }}</td>
+                        <td>{{ stat[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No player stats recorded for this match.</p>
     {% endif %}
 </div>
 {% endblock %}

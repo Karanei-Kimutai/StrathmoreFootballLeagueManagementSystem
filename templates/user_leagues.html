@@ -1,6 +1,6 @@
 {% extends "user_dashboard.html" %}
 {% block user_content %}
-<h2>League Profiles</h2>
+<h2>League Table</h2>
 <style>
     .flag-img {
         width: 40px;
@@ -18,10 +18,13 @@
                 <img src="{{ league[3] }}" alt="{{ league[1] }} Logo" style="height: 40px;">
             {% endif %}
             {% if league[2] %}
-                <img src="{{ league[2] }}" alt="{{ league[1] }} Flag" class="flag-img mr-2"">
+                <img src="{{ league[2] }}" alt="{{ league[1] }} Flag" class="flag-img mr-2">
             {% endif %}
             <a href="{{ url_for('user.profile_league', league_id=league[0]) }}">{{ league[1] }}</a>
         </li>
     {% endfor %}
 </ul>
+{% if not leagues %}
+    <p>No university league has been created yet.</p>
+{% endif %}
 {% endblock %}

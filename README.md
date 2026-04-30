@@ -1,9 +1,10 @@
-# Sports League Management System
+# University Football League Management System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
-The Sports League Management System is a comprehensive tool designed to manage data associated with sports leagues, including teams, players, coaches, referees, matches, scores, and standings. This project leverages real-time data integration, ensuring accuracy and efficiency in managing sports league data.
+
+The University Football League Management System is a modern, user-friendly platform for managing campus football leagues. It supports teams, players, matches, scores, standings, and detailed player stats, with a clean, responsive UI and streamlined admin workflows.
 
 ## Table of Contents
 1. [Project Description](#project-description)
@@ -17,21 +18,27 @@ The Sports League Management System is a comprehensive tool designed to manage d
 9. [License](#license)
 
 ## Project Description
-The Sports League Management System aims to manage comprehensive data associated with sports leagues. The project utilizes real-time data from [football-data.org](https://www.football-data.org/), maintaining an updated database with minimal manual data entry, enhancing the system's efficiency and reliability.
+This system is designed for university and campus football leagues. It provides:
+- Modern, branded UI with custom CSS
+- Direct front page access to league table and upcoming fixtures
+- Clean separation of admin and user workflows
+- Player match stats (goals, assists, cards) and advanced standings
+- Easy management of teams, squads, fixtures, and results
 
 ## Features
-- Real-time data integration
-- Management of teams, players, coaches, referees, matches, scores, and standings
-- User-friendly interface for administrators and users
-- Detailed search and filtering options
-- Secure authentication and authorization
-- Modular design for easy maintenance and scalability
+- Modern, responsive UI (custom CSS, Bootstrap base)
+- League table and upcoming fixtures on the front page
+- Admin panel for registering teams, managing squads, generating fixtures, and recording results
+- Player match stats: goals, assists, yellow/red cards
+- User dashboard for browsing teams, players, matches, and standings
+- Search for teams and players
+- Secure authentication and role-based access
 
 ## Technologies Used
-- **Frontend:** HTML, CSS (Bootstrap), JavaScript
-- **Backend:** Flask (Python framework)
+- **Frontend:** HTML, Custom CSS (modern, branded), Bootstrap, JavaScript
+- **Backend:** Flask (Python)
 - **Database:** PostgreSQL
-- **Other Libraries:** Requests, Gunicorn, Psycopg2, Python-Dotenv, Werkzeug
+- **Other Libraries:** Psycopg2, Python-Dotenv, Werkzeug
 
 ## Installation
 
@@ -102,20 +109,18 @@ If you prefer to run the application without Docker:
 
 ## Usage
 ### Admin Panel
-- **Manage Users:** View and modify user privileges.
-- **Manage Teams:** Add, update, or delete teams.
-- **Manage Players:** Add, update, or delete players.
-- **Manage Matches:** Schedule, update, or delete matches.
+- **Register Teams:** Add and manage teams (with squad status)
+- **Manage Squads:** Add players to teams
+- **Generate Fixtures:** Auto-generate round-robin fixtures
+- **Record Results:** Enter match results and player stats (goals, assists, cards)
+- **Encapsulated Admin UI:** All admin actions are accessible only after logging in as admin
 
 ### User Dashboard
-- **View Teams:** Browse team profiles and their historical performance.
-- **View Players:** View player profiles and performance statistics.
-- **View Leagues:** Browse different leagues and their standings.
-- **View Matches:** View upcoming and past matches with filtering options.
-- **Top Scorers:** See the top scorers in various leagues.
-
-### Search Functionality
-- **Search:** Find specific players, teams, stadiums, and coaches by name.
+- **League Table:** View up-to-date standings
+- **Upcoming Fixtures:** See next matches on the front page
+- **Teams & Players:** Browse teams, player profiles, and stats
+- **Match Profiles:** View match details and player stats
+- **Search:** Find teams and players quickly
 
 ## 🎯 Kaggle Dataset
 The data from this system is now available as a public dataset on Kaggle:
@@ -146,8 +151,9 @@ The ER diagram illustrates the relationships between different entities in the S
 ### User Dashboard
 ![User Dashboard](img/user_dashboard_screen.png)
 
-### Top Scorers Screen
-![Top Scorers Screen](img/scorers_screen.png)
+
+### Player Stats & Standings
+Player match stats (goals, assists, yellow/red cards) are tracked and shown in match and player profiles. Standings are calculated with advanced tiebreakers (points, goal difference, head-to-head).
 
 ### Matches Screen
 ![Matches Screen](img/match_screen.png)
@@ -169,6 +175,7 @@ The ER diagram illustrates the relationships between different entities in the S
 
 ### League Profile Screen
 ![League Profile Screen](img/league_profile_screen.png)
+
 
 ### Standings
 ![Standings](img/standings.png)
