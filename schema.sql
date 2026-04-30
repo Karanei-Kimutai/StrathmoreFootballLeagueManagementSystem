@@ -171,7 +171,8 @@ CREATE TABLE public.matches (
     home_team_id integer,
     away_team_id integer,
     winner character varying(50),
-    utc_date date
+    utc_date date,
+    status character varying(50) DEFAULT 'Pending'::character varying
 );
 
 
@@ -242,6 +243,45 @@ ALTER SEQUENCE public.players_player_id_seq OWNER TO sports_league_owner;
 --
 
 ALTER SEQUENCE public.players_player_id_seq OWNED BY public.players.player_id;
+
+
+--
+-- Name: player_match_stats; Type: TABLE; Schema: public; Owner: sports_league_owner
+--
+
+CREATE TABLE public.player_match_stats (
+    id integer NOT NULL,
+    player_id integer NOT NULL,
+    match_id integer NOT NULL,
+    goals integer DEFAULT 0,
+    assists integer DEFAULT 0,
+    yellow_cards integer DEFAULT 0,
+    red_cards integer DEFAULT 0
+);
+
+
+ALTER TABLE public.player_match_stats OWNER TO sports_league_owner;
+
+--
+-- Name: player_match_stats_id_seq; Type: SEQUENCE; Schema: public; Owner: sports_league_owner
+--
+
+CREATE SEQUENCE public.player_match_stats_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.player_match_stats_id_seq OWNER TO sports_league_owner;
+
+--
+-- Name: player_match_stats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sports_league_owner
+--
+
+ALTER SEQUENCE public.player_match_stats_id_seq OWNED BY public.player_match_stats.id;
 
 
 --
@@ -594,6 +634,13 @@ ALTER TABLE ONLY public.matches ALTER COLUMN match_id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.players ALTER COLUMN player_id SET DEFAULT nextval('public.players_player_id_seq'::regclass);
+
+
+--
+-- Name: player_match_stats id; Type: DEFAULT; Schema: public; Owner: sports_league_owner
+--
+
+ALTER TABLE ONLY public.player_match_stats ALTER COLUMN id SET DEFAULT nextval('public.player_match_stats_id_seq'::regclass);
 
 
 --
@@ -7565,6 +7612,14 @@ COPY public.players (player_id, team_id, name, "position", date_of_birth, nation
 
 
 --
+-- Data for Name: player_match_stats; Type: TABLE DATA; Schema: public; Owner: sports_league_owner
+--
+
+COPY public.player_match_stats (id, player_id, match_id, goals, assists, yellow_cards, red_cards) FROM stdin;
+\.
+
+
+--
 -- TOC entry 3468 (class 0 OID 122902)
 -- Dependencies: 235
 -- Data for Name: referees; Type: TABLE DATA; Schema: public; Owner: sports_league_owner
@@ -9971,6 +10026,13 @@ SELECT pg_catalog.setval('public.players_player_id_seq', 10, true);
 
 
 --
+-- Name: player_match_stats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sports_league_owner
+--
+
+SELECT pg_catalog.setval('public.player_match_stats_id_seq', 1, false);
+
+
+--
 -- TOC entry 3496 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: scorers_scorer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sports_league_owner
@@ -10085,6 +10147,14 @@ ALTER TABLE ONLY public.matches
 
 ALTER TABLE ONLY public.players
     ADD CONSTRAINT players_pkey PRIMARY KEY (player_id);
+
+
+--
+-- Name: player_match_stats player_match_stats_pkey; Type: CONSTRAINT; Schema: public; Owner: sports_league_owner
+--
+
+ALTER TABLE ONLY public.player_match_stats
+    ADD CONSTRAINT player_match_stats_pkey PRIMARY KEY (id);
 
 
 --
@@ -10256,6 +10326,22 @@ ALTER TABLE ONLY public.matches
 
 ALTER TABLE ONLY public.players
     ADD CONSTRAINT players_team_id_fkey FOREIGN KEY (team_id) REFERENCES public.teams(team_id);
+
+
+--
+-- Name: player_match_stats player_match_stats_match_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sports_league_owner
+--
+
+ALTER TABLE ONLY public.player_match_stats
+    ADD CONSTRAINT player_match_stats_match_id_fkey FOREIGN KEY (match_id) REFERENCES public.matches(match_id);
+
+
+--
+-- Name: player_match_stats player_match_stats_player_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sports_league_owner
+--
+
+ALTER TABLE ONLY public.player_match_stats
+    ADD CONSTRAINT player_match_stats_player_id_fkey FOREIGN KEY (player_id) REFERENCES public.players(player_id);
 
 
 --
