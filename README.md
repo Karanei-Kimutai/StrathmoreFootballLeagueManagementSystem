@@ -1,10 +1,10 @@
-# University Football League Management System
+# Strathmore Football League Management System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-The University Football League Management System is a modern, user-friendly platform for managing campus football leagues. It supports teams, players, matches, scores, standings, and detailed player stats, with a clean, responsive UI and streamlined admin workflows.
+The Strathmore Football League Management System is a modern, user-friendly platform for managing campus football leagues. It supports teams, players, matches, scores, standings, and detailed player stats, with a clean, responsive UI and streamlined admin workflows.
 
 ## Table of Contents
 1. [Project Description](#project-description)
