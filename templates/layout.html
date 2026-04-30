@@ -3,24 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sports League Management{% endblock %}</title>
+    <title>{% block title %}University Football League{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/png">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% if 'user_id' in session %}{% if session.get('is_admin') %}{{ url_for('admin') }}{% else %}{{ url_for('user') }}{% endif %}{% else %}{{ url_for('landing') }}{% endif %}">
+        <a class="navbar-brand" href="{% if 'user_id' in session and session.get('is_admin') %}{{ url_for('admin') }}{% else %}{{ url_for('user.user_dashboard') }}{% endif %}">
             <img src="{{ url_for('static', filename='images/icon.png') }}" width="40" class="d-inline-block align-top" alt="">
-            Sports League Management System
+            University Football League
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_leagues') }}">League Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_matches') }}">Fixtures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_teams') }}">Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_players') }}">Players</a>
+                </li>
                 {% if 'user_id' in session %}
+                    {% if session.get('is_admin') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin') }}">Admin</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('profile') }}">Hi, {{ session.username }}</a>
                     </li>
@@ -65,7 +83,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; 2024 Sports League Management System. All rights reserved.</p>
+                    <p>&copy; 2026 University Football League. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-right">
                     <a href="{{ url_for('about') }}" class="text-white">About Us</a>
