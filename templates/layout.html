@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}University Football League{% endblock %}</title>
+    <title>{% block title %}Strathmore Football League{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{% if 'user_id' in session and session.get('is_admin') %}{{ url_for('admin') }}{% else %}{{ url_for('user.user_dashboard') }}{% endif %}">
             <img src="{{ url_for('static', filename='images/icon.png') }}" width="40" class="d-inline-block align-top" alt="">
-            University Football League
+            Strathmore Football League
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -83,7 +83,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; 2026 University Football League. All rights reserved.</p>
+                    <p>&copy; 2026 Strathmore Football League. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-right">
                     <a href="{{ url_for('about') }}" class="text-white">About Us</a>

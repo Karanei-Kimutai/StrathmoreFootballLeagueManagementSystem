@@ -41,7 +41,7 @@ def get_or_create_university_league(cur):
             VALUES (%s, %s, %s, %s, %s)
             RETURNING league_id
             """,
-            ('University Football League', 'Kenya', 0, 0, 999),
+            ('Strathmore Football League', 'Kenya', 0, 0, 999),
         )
         league_id = cur.fetchone()[0]
 

@@ -1,6 +1,6 @@
 # Update Log: Modernization and Feature Enhancements (April 2026)
 
-This document summarizes all major changes, improvements, and new features added to the University Football League Management System repository up to this point.
+This document summarizes all major changes, improvements, and new features added to the Strathmore Football League Management System repository up to this point.
 
 ---
 
