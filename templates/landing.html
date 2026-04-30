@@ -1,11 +1,96 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Welcome to the Sports League Management System</h1>
-    <p class="lead">Manage leagues, teams, players, and more.</p>
-    <hr class="my-4">
-    <p>Log in to get started or register if you don't have an account.</p>
-    <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
-    <a class="btn btn-secondary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h1 class="display-4 mb-3">University Football League</h1>
+                <p class="lead">Fixtures, league table, teams, squads, and match stats for the campus football league.</p>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">League Table</h3>
+            </div>
+            <div class="card-body">
+                {% with leagues = leagues %}
+                    {% if leagues %}
+                        <ul class="list-group">
+                        {% for league in leagues %}
+                            <li class="list-group-item d-flex align-items-center">
+                                {% if league[3] %}
+                                    <img src="{{ league[3] }}" alt="{{ league[1] }} Logo" style="height: 40px; margin-right: 10px;">
+                                {% endif %}
+                                {% if league[2] %}
+                                    <img src="{{ league[2] }}" alt="{{ league[1] }} Flag" class="flag-img mr-2">
+                                {% endif %}
+                                <a href="{{ url_for('user.profile_league', league_id=league[0]) }}">{{ league[1] }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No university league has been created yet.</p>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Upcoming Fixtures</h3>
+            </div>
+            <div class="card-body">
+                {% with matches = matches %}
+                    {% if matches %}
+                        <ul class="list-group">
+                        {% for match in matches %}
+                            <li class="list-group-item d-flex flex-column">
+                                <div class="d-flex justify-content-between w-100 mb-2">
+                                    <div class="font-weight-bold">
+                                        <small>{{ match[5] }} | Matchday: {{ match[8] }}</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center match-result-box p-3 bg-light rounded shadow-sm">
+                                    <a href="{{ url_for('user.profile_match', match_id=match[0]) }}" class="d-flex align-items-center text-dark w-100" style="justify-content: space-around;">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ match[6] }}" alt="{{ match[1] }} Logo" style="height: 30px; margin-right: 10px;">
+                                            <strong>{{ match[1] }}</strong>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="match-score-box bg-primary text-white px-2 py-1 rounded">
+                                                {% if match[3] is not none and match[4] is not none %}
+                                                    {{ match[3] }} - {{ match[4] }}
+                                                {% else %}
+                                                    Scheduled
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <strong>{{ match[2] }}</strong>
+                                            <img src="{{ match[7] }}" alt="{{ match[2] }} Logo" style="height: 30px; margin-left: 10px;">
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No upcoming fixtures available.</p>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h4>Welcome!</h4>
+                <p>To manage teams, fixtures, and results, please log in as an admin.</p>
+                <a class="btn btn-primary btn-lg mb-2" href="{{ url_for('login') }}?admin=1" role="button">Log in as Admin</a>
+                <hr>
+                <a class="btn btn-outline-primary btn-block mb-2" href="{{ url_for('login') }}" role="button">User Login</a>
+                <a class="btn btn-secondary btn-block" href="{{ url_for('register') }}" role="button">Register</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
