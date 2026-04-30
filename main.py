@@ -21,8 +21,6 @@ def internal_error(error):
 
 @app.route('/')
 def landing():
-    if 'user_id' in session:
-        session.clear()
     return render_template('landing.html')
 
 @app.route('/home')
@@ -31,9 +29,8 @@ def home():
         if session.get('is_admin'):
             return redirect(url_for('admin'))
         else:
-            return redirect(url_for('user'))
-    else:
-        return redirect(url_for('login'))
+            return redirect(url_for('user.user_dashboard'))
+    return redirect(url_for('user.user_dashboard'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -111,10 +108,6 @@ def about():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    if 'user_id' not in session:
-        flash('You need to log in to search', 'error')
-        return redirect(url_for('login'))
-
     results = []
     query = ""
     if request.method == 'POST':
@@ -128,27 +121,9 @@ def search():
             ('%' + query + '%', ))
         results.extend(cur.fetchall())
 
-        # Search in coaches
-        cur.execute(
-            "SELECT coach_id, name, 'coach' AS source FROM coaches WHERE name ILIKE %s",
-            ('%' + query + '%', ))
-        results.extend(cur.fetchall())
-
         # Search in players
         cur.execute(
             "SELECT player_id, name, 'player' AS source FROM players WHERE name ILIKE %s",
-            ('%' + query + '%', ))
-        results.extend(cur.fetchall())
-
-        # Search in stadiums
-        cur.execute(
-            "SELECT stadium_id, name, 'stadium' AS source FROM stadiums WHERE name ILIKE %s",
-            ('%' + query + '%', ))
-        results.extend(cur.fetchall())
-
-        # Search in leagues
-        cur.execute(
-            "SELECT league_id, name, 'league' AS source FROM leagues WHERE name ILIKE %s",
             ('%' + query + '%', ))
         results.extend(cur.fetchall())
 
@@ -164,18 +139,11 @@ def admin():
 
 @app.route('/user')
 def user():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    db = get_db()
-    cur = db.cursor()
-    cur.execute('SELECT * FROM users;')
-    users = cur.fetchall()
-    cur.close()
-    return render_template('user.html', users=users)
+    return redirect(url_for('user.user_dashboard'))
 
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
-    if 'user_id' not in session:
+    if 'user_id' not in session or not session.get('is_admin'):
         return redirect(url_for('login'))
     if request.method == 'POST':
         try:
