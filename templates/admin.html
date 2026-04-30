@@ -1,29 +1,45 @@
 {% extends "layout.html" %}
-{% block title %}Admin Panel - Sports League Management{% endblock %}
+{% block title %}Admin Panel - University Football League{% endblock %}
 {% block content %}
 <div class="container mt-4">
-    <h1>Admin Panel</h1>
+    <h1>League Admin</h1>
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
-                 <a href="{{ url_for('admin.manage_users') }}" class="list-group-item list-group-item-action">Manage Users</a>
-                <a href="{{ url_for('admin.manage_stadiums') }}" class="list-group-item list-group-item-action">Manage Stadiums</a>
-                <a href="{{ url_for('admin.manage_leagues') }}" class="list-group-item list-group-item-action">Manage Leagues</a>
-                <a href="{{ url_for('admin.manage_seasons') }}" class="list-group-item list-group-item-action">Manage Seasons</a>
-                <a href="{{ url_for('admin.manage_teams') }}" class="list-group-item list-group-item-action">Manage Teams</a>
-                <a href="{{ url_for('admin.manage_coaches') }}" class="list-group-item list-group-item-action">Manage Coaches</a>
-                <a href="{{ url_for('admin.manage_players') }}" class="list-group-item list-group-item-action">Manage Players</a>
-                <a href="{{ url_for('admin.manage_matches') }}" class="list-group-item list-group-item-action">Manage Matches</a>
-                <a href="{{ url_for('admin.manage_scores') }}" class="list-group-item list-group-item-action">Manage Scores</a>
-                <a href="{{ url_for('admin.manage_countries') }}" class="list-group-item list-group-item-action">Manage Countries</a>
-                <a href="{{ url_for('admin.manage_referees') }}" class="list-group-item list-group-item-action">Manage Referees</a>
-                <a href="{{ url_for('admin.manage_scorers') }}" class="list-group-item list-group-item-action">Manage Scorers</a>
-                <a href="{{ url_for('admin.manage_standings') }}" class="list-group-item list-group-item-action">Manage Standings</a>
+                <!-- <a href="{{ url_for('admin.manage_users') }}" class="list-group-item list-group-item-action">Manage Users</a> -->
+                <!-- <a href="{{ url_for('admin.manage_stadiums') }}" class="list-group-item list-group-item-action">Manage Stadiums</a> -->
+                <!-- <a href="{{ url_for('admin.manage_leagues') }}" class="list-group-item list-group-item-action">League Setup</a> -->
+                <!-- <a href="{{ url_for('admin.manage_seasons') }}" class="list-group-item list-group-item-action">Manage Seasons</a> -->
+                <a href="{{ url_for('admin.manage_teams') }}" class="list-group-item list-group-item-action">Register Teams</a>
+                <!-- <a href="{{ url_for('admin.manage_coaches') }}" class="list-group-item list-group-item-action">Manage Coaches</a> -->
+                <a href="{{ url_for('admin.manage_players') }}" class="list-group-item list-group-item-action">Team Squads</a>
+                <a href="{{ url_for('admin.manage_matches') }}" class="list-group-item list-group-item-action">Fixtures & Results</a>
+                <!-- <a href="{{ url_for('admin.manage_scores') }}" class="list-group-item list-group-item-action">Manage Scores</a> -->
+                <!-- <a href="{{ url_for('admin.manage_countries') }}" class="list-group-item list-group-item-action">Manage Countries</a> -->
+                <!-- <a href="{{ url_for('admin.manage_referees') }}" class="list-group-item list-group-item-action">Manage Referees</a> -->
+                <!-- <a href="{{ url_for('admin.manage_scorers') }}" class="list-group-item list-group-item-action">Manage Scorers</a> -->
+                <a href="{{ url_for('user.user_leagues') }}" class="list-group-item list-group-item-action">League Table</a>
             </div>
         </div>
         <div class="col-md-9">
-            <h2>Welcome to the Admin Dashboard</h2>
-            <p>Use the sidebar to manage the system.</p>
+            <h2>Run the campus football league</h2>
+            <p>Use this area to register teams, build squads, generate fixtures, and record match results with goals and assists.</p>
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <a href="{{ url_for('admin.manage_teams') }}" class="btn btn-primary btn-block">Register a Team</a>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <a href="{{ url_for('admin.manage_players') }}" class="btn btn-primary btn-block">Add Players</a>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <form method="POST" action="{{ url_for('admin.generate_default_fixtures') }}">
+                        <button type="submit" class="btn btn-outline-primary btn-block">Generate Fixtures</button>
+                    </form>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <a href="{{ url_for('admin.manage_scores') }}" class="btn btn-outline-primary btn-block">Enter Match Result</a>
+                </div>
+            </div>
         </div>
     </div>
     <nav class="mt-4">
