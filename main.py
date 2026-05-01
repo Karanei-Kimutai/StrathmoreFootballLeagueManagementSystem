@@ -21,7 +21,35 @@ def internal_error(error):
 
 @app.route('/')
 def landing():
-    return render_template('landing.html')
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("""
+        SELECT league_id, name, NULL AS flag_url, NULL AS icon_url
+        FROM leagues
+        ORDER BY league_id
+        LIMIT 1
+    """)
+    leagues = cur.fetchall()
+    cur.execute("""
+        SELECT m.match_id,
+               t1.name AS home_team_name,
+               t2.name AS away_team_name,
+               s.full_time_home AS home_score,
+               s.full_time_away AS away_score,
+               TO_CHAR(m.utc_date, 'Month DD, YYYY') AS formatted_date,
+               t1.crestURL AS home_team_logo,
+               t2.crestURL AS away_team_logo,
+               m.matchday
+        FROM matches m
+        JOIN teams t1 ON m.home_team_id = t1.team_id
+        JOIN teams t2 ON m.away_team_id = t2.team_id
+        LEFT JOIN scores s ON m.match_id = s.match_id
+        ORDER BY m.utc_date ASC NULLS LAST, m.match_id ASC
+        LIMIT 5
+    """)
+    matches = cur.fetchall()
+    cur.close()
+    return render_template('landing.html', leagues=leagues, matches=matches)
 
 @app.route('/home')
 def home():
@@ -83,9 +111,12 @@ def register():
             # Hash the password
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+            cur.execute('SELECT COUNT(*) FROM users')
+            is_first_user = cur.fetchone()[0] == 0
+
             cur.execute(
                 'INSERT INTO users (username, password, email, is_admin) VALUES (%s, %s, %s, %s)',
-                (username, hashed_password, email, False))
+                (username, hashed_password, email, is_first_user))
             db.commit()
             cur.close()
             flash('Registration successful', 'success')
@@ -140,35 +171,6 @@ def admin():
 @app.route('/user')
 def user():
     return redirect(url_for('user.user_dashboard'))
-
-@app.route('/add_user', methods=['GET', 'POST'])
-def add_user():
-    if 'user_id' not in session or not session.get('is_admin'):
-        return redirect(url_for('login'))
-    if request.method == 'POST':
-        try:
-            db = get_db()
-            cur = db.cursor()
-            username = request.form['username']
-            password = request.form['password']
-            email = request.form['email']
-
-            # Hash the password
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-            cur.execute(
-                'INSERT INTO users (username, password, email) VALUES (%s, %s, %s)',
-                (username, hashed_password, email))
-            db.commit()
-            cur.close()
-            flash('User added successfully', 'success')
-            return redirect(url_for('user'))
-        except Exception as e:
-            db.rollback()
-            print("Error: ", str(e))
-            flash('Failed to add user', 'error')
-            return redirect(url_for('add_user'))
-    return render_template('add_user.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():

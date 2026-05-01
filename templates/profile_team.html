@@ -34,11 +34,7 @@
     <h1>{{ team[0] }}'s Profile</h1>
     <p><strong>Founded:</strong> {{ team[1] }}</p>
     <p><strong>Venue:</strong> {{ team[2] or "Campus pitch" }}</p>
-    <p><strong>Coach:</strong> {{ team[3] or "Not set" }}
-        {% if team[6] %}
-            <img src="{{ team[6] }}" alt="Flag" class="flag-img">
-        {% endif %}
-    </p>
+    <p><strong>Coach:</strong> {{ team[3] or "Not set" }}</p>
     <p><strong>League:</strong> {{ team[4] }}</p>
     {% if logo_url %}
         <img src="{{ logo_url }}" alt="{{ team[0] }} Logo" class="img-fluid rounded border mb-2" style="max-height: 100px;">
@@ -51,10 +47,7 @@
                 <li class="list-group-item">
                     <span class="badge {% if player[3] == 'Goalkeeper' %}badge-secondary{% elif player[3] == 'Defence' %}badge-primary{% elif player[3] == 'Midfield' %}badge-success{% elif player[3] == 'Offence' %}badge-danger{% endif %} mr-2">&bull;</span>
                     <a href="{{ url_for('user.profile_player', player_id=player[0]) }}">{{ player[1] }} ({{ player[3] }})</a>
-                    {% if player[4] %}
-                    {{player[4]}}
-                        <img src="{{ player[5] }}" alt="Flag" class="flag-img">
-                    {% endif %}
+                    {% if player[4] %}{{ player[4] }}{% endif %}
                 </li>
             {% endfor %}
         </ul>

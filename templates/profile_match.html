@@ -39,16 +39,12 @@
         </div>
         <div class="text-right">
             <p><strong>Venue:</strong> {{ match[9] }} - {{ match[10] }}</p>
-            <p><strong>Referee:</strong> {{ match[11] }} 
-                {% if match[12] %}
-                    <img src="{{ match[12] }}" alt="Flag" class="flag-img mr-2">
-                {% endif %}
-            </p>
+            <p><strong>Referee:</strong> To be assigned</p>
         </div>
     </div>
 
     <div class="d-flex justify-content-center align-items-center match-result-box p-3 bg-light rounded shadow-sm mb-4">
-        <a href="{{ url_for('user.profile_team', team_id=match[13]) }}" class="d-flex align-items-center text-dark">
+        <a href="{{ url_for('user.profile_team', team_id=match[11]) }}" class="d-flex align-items-center text-dark">
             <img src="{{ match[7] }}" alt="{{ match[1] }} Logo" class="team-logo">
             <strong class="mx-2">{{ match[1] }}</strong>
         </a>
@@ -59,7 +55,7 @@
                 Scheduled
             {% endif %}
         </span>
-        <a href="{{ url_for('user.profile_team', team_id=match[14]) }}" class="d-flex align-items-center text-dark">
+        <a href="{{ url_for('user.profile_team', team_id=match[12]) }}" class="d-flex align-items-center text-dark">
             <strong class="mx-2">{{ match[2] }}</strong>
             <img src="{{ match[8] }}" alt="{{ match[2] }} Logo" class="team-logo">
         </a>
