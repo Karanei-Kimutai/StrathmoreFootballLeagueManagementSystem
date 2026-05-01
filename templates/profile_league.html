@@ -8,9 +8,6 @@
             <div class="card border-0">
                 <div class="card-body text-center">
                     <h1>{{ league[0] }}'s Profile</h1>
-                    {% if league[2] %}
-                        <img src="{{ league[2] }}" alt="{{ league[0] }} Logo" class="img-fluid rounded border mb-2" style="max-height: 100px;">
-                    {% endif %}
                     {% if league[3] %}
                         <img src="{{ league[3] }}" alt="{{ league[1] }} Flag" class="img-fluid rounded border" style="max-height: 50px;">
                     {% endif %}
@@ -114,7 +111,9 @@
                 <ul class="list-group">
                     {% for team in teams %}
                         <li class="list-group-item">
-                            <img src="{{ team[2] }}" alt="{{ team[1] }} Logo" style="height: 20px; width: 20px; margin-right: 5px;">
+                            {% if team[2] %}
+                                <img src="{{ team[2] }}" alt="{{ team[1] }} Logo" style="height: 20px; width: 20px; margin-right: 5px;">
+                            {% endif %}
                             <a href="{{ url_for('user.profile_team', team_id=team[0]) }}">{{ team[1] }}</a>
                         </li>
                     {% endfor %}
