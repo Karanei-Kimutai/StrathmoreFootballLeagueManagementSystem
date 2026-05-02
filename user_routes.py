@@ -197,12 +197,11 @@ def profile_team(team_id):
     db = get_db()
     cur = db.cursor()
 
-    # Get team details along with stadium, coach, league, and crestURL
+    # Get team details along with stadium, manager, league, and crestURL
     cur.execute("""
-        SELECT t.name, t.founded_year, s.name AS stadium_name, c.name AS coach_name, l.name AS league_name, t.crestURL
+        SELECT t.name, s.name AS stadium_name, t.manager_name, l.name AS league_name, t.crestURL
         FROM teams t
         LEFT JOIN stadiums s ON t.stadium_id = s.stadium_id
-        LEFT JOIN coaches c ON t.coach_id = c.coach_id
         JOIN leagues l ON t.league_id = l.league_id
         WHERE t.team_id = %s
     """, (team_id,))
@@ -210,7 +209,7 @@ def profile_team(team_id):
 
     # Get players
     cur.execute("""
-        SELECT p.player_id, p.name, p.date_of_birth, p.position, p.nationality
+        SELECT p.player_id, p.name
         FROM players p 
         WHERE p.team_id = %s
     """, (team_id,))
@@ -244,7 +243,7 @@ def profile_team(team_id):
                                team=team,
                                players=players,
                                scores=scores,
-                               logo_url=team[5])
+                               logo_url=team[4])
     else:
         flash('Team not found', 'error')
         return redirect(url_for('user.user_dashboard'))

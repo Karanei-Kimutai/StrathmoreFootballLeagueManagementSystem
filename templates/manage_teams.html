@@ -13,8 +13,8 @@
                     <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="founded_year">Founded Year:</label>
-                    <input type="number" class="form-control" id="founded_year" name="founded_year" required>
+                    <label for="manager_name">Manager/Coach Name:</label>
+                    <input type="text" class="form-control" id="manager_name" name="manager_name" required>
                 </div>
                 <div class="form-group d-none">
                     <label for="stadium_id">Stadium:</label>
@@ -33,15 +33,6 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group d-none">
-                    <label for="coach_id">Coach:</label>
-                    <select class="form-control" id="coach_id" name="coach_id">
-                        <option value="">Not set</option>
-                        {% for coach in coaches %}
-                        <option value="{{ coach[0] }}">{{ coach[1] }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
                 <button type="submit" name="add" class="btn btn-primary" id="submit-button">Add Team</button>
             </form>
         </div>
@@ -52,7 +43,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Founded Year</th>
+                        <th>Manager/Coach</th>
                         <th>Squad Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -63,10 +54,10 @@
                     <tr>
                         <td>{{ team[0] }}</td>
                         <td>{{ team[1] }}</td>
-                        <td>{{ team[2] }}</td>
+                        <td>{{ team[4] }}</td>
                         <td>{{ "Registered" }}</td>
                         <td>
-                            <button class="btn btn-success btn-sm" onclick="editTeam('{{ team[0] }}', '{{ team[1] }}', '{{ team[2] }}', '{{ team[6] or '' }}', '{{ team[7] }}', '{{ team[8] or '' }}')">
+                            <button class="btn btn-success btn-sm" onclick="editTeam('{{ team[0] }}', '{{ team[1] }}', '{{ team[6] or '' }}', '{{ team[7] }}', '{{ team[8] or '' }}')">
                                 <i class="fa fa-pencil-alt"></i>
                             </button>
                         </td>
@@ -108,13 +99,12 @@
 </div>
 
 <script>
-    function editTeam(id, name, founded_year, stadium_id, league_id, coach_id) {
+    function editTeam(id, name, stadium_id, league_id, manager_name) {
         document.getElementById('team_id').value = id;
         document.getElementById('name').value = name;
-        document.getElementById('founded_year').value = founded_year;
         document.getElementById('stadium_id').value = stadium_id;
         document.getElementById('league_id').value = league_id;
-        document.getElementById('coach_id').value = coach_id;
+        document.getElementById('manager_name').value = manager_name || '';
         document.getElementById('submit-button').innerText = 'Update Team';
         document.getElementById('form-title').innerText = 'Edit Team';
     }

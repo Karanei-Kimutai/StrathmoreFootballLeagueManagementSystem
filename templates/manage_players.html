@@ -20,18 +20,6 @@
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" required>
                 </div>
-                <div class="form-group">
-                    <label for="position">Position:</label>
-                    <input type="text" class="form-control" id="position" name="position" required>
-                </div>
-                <div class="form-group">
-                    <label for="date_of_birth">Date of Birth:</label>
-                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
-                </div>
-                <div class="form-group">
-                    <label for="nationality">Nationality:</label>
-                    <input type="text" class="form-control" id="nationality" name="nationality" required>
-                </div>
                 <button type="submit" name="submit" class="btn btn-primary" id="submit-button">Add Player</button>
             </form>
         </div>
@@ -43,9 +31,6 @@
                         <th>ID</th>
                         <th>Team</th>
                         <th>Name</th>
-                        <th>Position</th>
-                        <th>Date of Birth</th>
-                        <th>Nationality</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -56,11 +41,8 @@
                         <td>{{ player[0] }}</td>
                         <td>{{ player[1] }}</td>
                         <td>{{ player[2] }}</td>
-                        <td>{{ player[3] }}</td>
-                        <td>{{ player[4] }}</td>
-                        <td>{{ player[5] }}</td>
                         <td>
-                            <button class="btn btn-success btn-sm" onclick="editPlayer('{{ player[0] }}', '{{ player[6] }}', '{{ player[2] }}', '{{ player[3] }}', '{{ player[4] }}', '{{ player[5] }}')">
+                            <button class="btn btn-success btn-sm" onclick="editPlayer('{{ player[0] }}', '{{ player[3] }}', '{{ player[2] }}')">
                                 <i class="fa fa-pencil-alt"></i>
                             </button>
                         </td>
@@ -102,13 +84,10 @@
 </div>
 
 <script>
-    function editPlayer(id, team_id, name, position, date_of_birth, nationality) {
+    function editPlayer(id, team_id, name) {
         document.getElementById('player_id').value = id;
         document.getElementById('team_id').value = team_id;
         document.getElementById('name').value = name;
-        document.getElementById('position').value = position;
-        document.getElementById('date_of_birth').value = date_of_birth;
-        document.getElementById('nationality').value = nationality;
         document.getElementById('submit-button').innerText = 'Update Player';
         document.getElementById('form-title').innerText = 'Edit Player';
     }
