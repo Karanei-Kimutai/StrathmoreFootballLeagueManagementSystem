@@ -35,9 +35,7 @@
     <p><strong>Venue:</strong> {{ team[1] or "Campus pitch" }}</p>
     <p><strong>Manager/Coach:</strong> {{ team[2] or "Not set" }}</p>
     <p><strong>League:</strong> {{ team[3] }}</p>
-    {% if logo_url %}
-        <img src="{{ logo_url }}" alt="{{ team[0] }} Logo" class="img-fluid rounded border mb-2" style="max-height: 100px;">
-    {% endif %}
+    {# Logo removed #}
 
     <h2>Players</h2>
     {% if players %}
@@ -64,7 +62,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center match-result-box p-3 bg-light rounded shadow-sm">
                         <a href="{{ url_for('user.profile_match', match_id=score[0]) }}" class="d-flex align-items-center text-dark">
-                            <img src="{{ score[6] }}" alt="{{ score[2] }} Logo" class="team-logo">
+                            {# Logo removed #}
                             <strong class="mx-2">{{ score[2] }}</strong>
                             <span class="match-score-box mx-2">
                                 {% if score[4] is not none and score[5] is not none %}
@@ -74,7 +72,7 @@
                                 {% endif %}
                             </span>
                             <strong class="mx-2">{{ score[3] }}</strong>
-                            <img src="{{ score[7] }}" alt="{{ score[3] }} Logo" class="team-logo">
+                            {# Logo removed #}
                         </a>
                     </div>
                 </li>

@@ -45,7 +45,7 @@
 
     <div class="d-flex justify-content-center align-items-center match-result-box p-3 bg-light rounded shadow-sm mb-4">
         <a href="{{ url_for('user.profile_team', team_id=match[11]) }}" class="d-flex align-items-center text-dark">
-            <img src="{{ match[7] }}" alt="{{ match[1] }} Logo" class="team-logo">
+            {# Logo removed #}
             <strong class="mx-2">{{ match[1] }}</strong>
         </a>
         <span class="match-score-box mx-2">
@@ -57,7 +57,7 @@
         </span>
         <a href="{{ url_for('user.profile_team', team_id=match[12]) }}" class="d-flex align-items-center text-dark">
             <strong class="mx-2">{{ match[2] }}</strong>
-            <img src="{{ match[8] }}" alt="{{ match[2] }} Logo" class="team-logo">
+            {# Logo removed #}
         </a>
     </div>
 

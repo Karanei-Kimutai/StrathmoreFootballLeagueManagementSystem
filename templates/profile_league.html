@@ -50,9 +50,7 @@
                                 <tr>
                                     <td style="border-left: 10px solid {% if standing[13] %}#0057b8{% elif standing[14] %}#f2a900{% elif standing[15] %}#c8102e{% else %}transparent{% endif %};">{{ standing[0] }}</td>
                                     <td>
-                                        {% if standing[12] %}
-                                            <img src="{{ standing[12] }}" alt="{{ standing[2] }} Logo" style="height: 20px; width: 20px; margin-right: 5px;">
-                                        {% endif %}
+                                        {# Logo removed #}
                                         <a href="{{ url_for('user.profile_team', team_id=standing[1]) }}">{{ standing[2] }}</a>
                                     </td>
                                     <td>{{ standing[3] }}</td>
@@ -111,9 +109,7 @@
                 <ul class="list-group">
                     {% for team in teams %}
                         <li class="list-group-item">
-                            {% if team[2] %}
-                                <img src="{{ team[2] }}" alt="{{ team[1] }} Logo" style="height: 20px; width: 20px; margin-right: 5px;">
-                            {% endif %}
+                            {# Logo removed #}
                             <a href="{{ url_for('user.profile_team', team_id=team[0]) }}">{{ team[1] }}</a>
                         </li>
                     {% endfor %}
