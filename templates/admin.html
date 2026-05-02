@@ -2,7 +2,11 @@
 {% block title %}Admin Panel - Strathmore Football League{% endblock %}
 {% block content %}
 <div class="container mt-4">
-    <h1>League Admin</h1>
+    <div class="mb-4 rounded-lg bg-white p-6 shadow-xl shadow-slate-900/10">
+        <p class="mb-2 text-sm font-bold uppercase tracking-wide text-league-blue">Admin workspace</p>
+        <h1 class="mb-2">League Admin</h1>
+        <p>Register teams, build squads, generate fixtures, and record match results from one place.</p>
+    </div>
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
@@ -13,8 +17,6 @@
             </div>
         </div>
         <div class="col-md-9">
-            <h2>Run the campus football league</h2>
-            <p>Use this area to register teams, build squads, generate fixtures, and record match results with goals and assists.</p>
             <div class="row mt-4">
                 <div class="col-md-6 mb-3">
                     <a href="{{ url_for('admin.manage_teams') }}" class="btn btn-primary btn-block">Register a Team</a>

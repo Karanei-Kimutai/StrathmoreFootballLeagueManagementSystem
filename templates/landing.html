@@ -2,10 +2,14 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-8 mb-4">
-        <div class="card mb-4">
-            <div class="card-body">
+        <div class="mb-4 overflow-hidden rounded-lg bg-league-navy text-white shadow-xl shadow-slate-900/10">
+            <div class="p-6 sm:p-8">
                 <h1 class="display-4 mb-3">Strathmore Football League</h1>
-                <p class="lead">Fixtures, league table, teams, squads, and match stats for the campus football league.</p>
+                <p class="lead max-w-2xl text-slate-200">Fixtures, league table, teams, squads, and match stats for the campus football league.</p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <a class="btn btn-primary" href="{{ url_for('user.user_leagues') }}">View League Table</a>
+                    <a class="btn btn-outline-secondary" href="{{ url_for('user.user_matches') }}">Fixtures</a>
+                </div>
             </div>
         </div>
         <div class="card mb-4">
@@ -83,12 +87,11 @@
     <div class="col-lg-4">
         <div class="card mb-4">
             <div class="card-body text-center">
-                <h4>Welcome!</h4>
-                <p>To manage teams, fixtures, and results, please log in as an admin.</p>
-                <a class="btn btn-primary btn-lg mb-2" href="{{ url_for('login') }}?admin=1" role="button">Log in as Admin</a>
+                <h4>League Admin</h4>
+                <p>Use the single admin account to manage teams, fixtures, and results.</p>
+                <a class="btn btn-primary btn-lg mb-2 btn-block" href="{{ url_for('login') }}?admin=1" role="button">Log in as Admin</a>
                 <hr>
-                <a class="btn btn-outline-primary btn-block mb-2" href="{{ url_for('login') }}" role="button">User Login</a>
-                <a class="btn btn-secondary btn-block" href="{{ url_for('register') }}" role="button">Register</a>
+                <a class="btn btn-outline-primary btn-block mb-2" href="{{ url_for('user.user_dashboard') }}" role="button">Browse League</a>
             </div>
         </div>
     </div>
