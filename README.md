@@ -31,7 +31,7 @@ The app is intentionally scoped to a single Strathmore league instead of a broad
 - PostgreSQL
 - Psycopg2
 - Bcrypt
-- Bootstrap and custom CSS
+- Tailwind CSS and a small custom compatibility stylesheet
 - Docker and Docker Compose
 
 ## Project Structure
@@ -156,7 +156,7 @@ Fixtures are generated as a single round-robin using the helper in `utils.py`.
 
 ## Public/User Workflow
 
-Users can browse:
+Visitors can browse:
 
 - League table
 - Fixtures
@@ -167,7 +167,7 @@ Users can browse:
 - Player profiles and aggregated stats
 - Match profiles and per-match player stats
 
-Users can register and update their own profile. The first self-registered user is also promoted to admin as a fallback for non-Docker setups with an empty `users` table.
+Public sign-up is intentionally disabled. The app uses a single seeded admin account for management, while league browsing remains public.
 
 ## Database Overview
 

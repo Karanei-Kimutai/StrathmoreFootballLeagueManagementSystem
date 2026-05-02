@@ -83,51 +83,6 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        try:
-            db = get_db()
-            cur = db.cursor()
-            username = request.form['username']
-            password = request.form['password']
-            email = request.form['email']
-
-            # Check if the username already exists
-            cur.execute('SELECT * FROM users WHERE username = %s',
-                        (username, ))
-            existing_user = cur.fetchone()
-            if existing_user:
-                flash('Username already taken', 'error')
-                return redirect(url_for('register'))
-
-            # Check if the email already exists
-            cur.execute('SELECT * FROM users WHERE email = %s', (email, ))
-            existing_email = cur.fetchone()
-            if existing_email:
-                flash('Email already registered', 'error')
-                return redirect(url_for('register'))
-
-            # Hash the password
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-            cur.execute('SELECT COUNT(*) FROM users')
-            is_first_user = cur.fetchone()[0] == 0
-
-            cur.execute(
-                'INSERT INTO users (username, password, email, is_admin) VALUES (%s, %s, %s, %s)',
-                (username, hashed_password, email, is_first_user))
-            db.commit()
-            cur.close()
-            flash('Registration successful', 'success')
-            return redirect(url_for('login'))
-        except Exception as e:
-            db.rollback()
-            print("Error: ", str(e))
-            flash('Registration failed', 'error')
-            return redirect(url_for('register'))
-    return render_template('register.html')
-
 @app.route('/logout')
 def logout():
     session.clear()
