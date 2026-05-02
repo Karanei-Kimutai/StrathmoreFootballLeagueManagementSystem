@@ -85,11 +85,9 @@ def user_players():
     cur.execute('SELECT team_id, name FROM teams')
     teams = cur.fetchall()
 
-    positions = ['Goalkeeper', 'Defence', 'Midfield', 'Offence']
-
-    # Build the base query
+    # Build the base query (no position)
     query = """
-        SELECT p.player_id, p.name, p.position, t.crestURL, t.name
+        SELECT p.player_id, p.name, t.crestURL, t.name
         FROM players p
         JOIN teams t ON p.team_id = t.team_id
         WHERE 1=1
@@ -103,9 +101,6 @@ def user_players():
     if team_id:
         query += " AND p.team_id = %s"
         filters.append(team_id)
-    if position:
-        query += " AND p.position = %s"
-        filters.append(position)
 
     query += " LIMIT %s OFFSET %s"
     filters.append(per_page)
@@ -114,13 +109,13 @@ def user_players():
     cur.execute(query, filters)
     players = cur.fetchall()
 
-    cur.execute('SELECT COUNT(*) FROM players p JOIN teams t ON p.team_id = t.team_id WHERE 1=1' + (' AND t.league_id = %s' if league_id else '') + (' AND p.team_id = %s' if team_id else '') + (' AND p.position = %s' if position else ''), filters[:-2])
+    cur.execute('SELECT COUNT(*) FROM players p JOIN teams t ON p.team_id = t.team_id WHERE 1=1' + (' AND t.league_id = %s' if league_id else '') + (' AND p.team_id = %s' if team_id else ''), filters[:-2])
     total_players = cur.fetchone()[0]
     cur.close()
 
     total_pages = (total_players + per_page - 1) // per_page
 
-    return render_template('user_players.html', players=players, page=page, total_pages=total_pages, teams=teams, positions=positions, max=max, min=min, str=str)
+    return render_template('user_players.html', players=players, page=page, total_pages=total_pages, teams=teams, max=max, min=min, str=str)
 
 
 

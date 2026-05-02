@@ -114,7 +114,18 @@ docker compose down -v
 docker compose up --build
 ```
 
+
 This deletes local database data. Use it only when you actually want a fresh development database.
+
+## Seeding the Database
+
+To populate the database with sample teams, players, fixtures, scores, and player stats, run the provided seed script inside the running Docker container:
+
+```sh
+docker compose exec web python seed.py
+```
+
+This will connect to the running database and insert demo data for development and testing. Ensure the database service is running before executing the command.
 
 ## Run Without Docker
 
