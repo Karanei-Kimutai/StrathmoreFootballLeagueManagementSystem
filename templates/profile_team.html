@@ -32,10 +32,9 @@
 </style>
 <div class="container mt-4">
     <h1>{{ team[0] }}'s Profile</h1>
-    <p><strong>Founded:</strong> {{ team[1] }}</p>
-    <p><strong>Venue:</strong> {{ team[2] or "Campus pitch" }}</p>
-    <p><strong>Coach:</strong> {{ team[3] or "Not set" }}</p>
-    <p><strong>League:</strong> {{ team[4] }}</p>
+    <p><strong>Venue:</strong> {{ team[1] or "Campus pitch" }}</p>
+    <p><strong>Manager/Coach:</strong> {{ team[2] or "Not set" }}</p>
+    <p><strong>League:</strong> {{ team[3] }}</p>
     {% if logo_url %}
         <img src="{{ logo_url }}" alt="{{ team[0] }} Logo" class="img-fluid rounded border mb-2" style="max-height: 100px;">
     {% endif %}
@@ -45,9 +44,7 @@
         <ul class="list-group">
             {% for player in players %}
                 <li class="list-group-item">
-                    <span class="badge {% if player[3] == 'Goalkeeper' %}badge-secondary{% elif player[3] == 'Defence' %}badge-primary{% elif player[3] == 'Midfield' %}badge-success{% elif player[3] == 'Offence' %}badge-danger{% endif %} mr-2">&bull;</span>
-                    <a href="{{ url_for('user.profile_player', player_id=player[0]) }}">{{ player[1] }} ({{ player[3] }})</a>
-                    {% if player[4] %}{{ player[4] }}{% endif %}
+                    {{ player[1] }}
                 </li>
             {% endfor %}
         </ul>

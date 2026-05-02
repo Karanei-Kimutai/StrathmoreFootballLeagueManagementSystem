@@ -24,10 +24,9 @@ CREATE TABLE IF NOT EXISTS stadiums (
 CREATE TABLE IF NOT EXISTS teams (
     team_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    founded_year INTEGER,
+    manager_name VARCHAR(255),
     stadium_id INTEGER REFERENCES stadiums(stadium_id) ON DELETE SET NULL,
     league_id INTEGER NOT NULL REFERENCES leagues(league_id) ON DELETE CASCADE,
-    coach_id INTEGER,
     crestURL TEXT
 );
 
@@ -41,10 +40,7 @@ CREATE TABLE IF NOT EXISTS coaches (
 CREATE TABLE IF NOT EXISTS players (
     player_id SERIAL PRIMARY KEY,
     team_id INTEGER NOT NULL REFERENCES teams(team_id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    position VARCHAR(100) NOT NULL,
-    date_of_birth DATE,
-    nationality VARCHAR(100)
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS matches (

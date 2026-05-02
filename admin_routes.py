@@ -64,18 +64,17 @@ def manage_teams():
         try:
             team_id = request.form.get('team_id')
             name = request.form['name']
-            founded_year = request.form['founded_year']
             stadium_id = request.form.get('stadium_id') or None
             league_id = request.form.get('league_id') or get_or_create_university_league(cur)[0]
-            coach_id = request.form.get('coach_id') or None
+            manager_name = request.form.get('manager_name', '').strip()
 
             if 'add' in request.form:
-                cur.execute('INSERT INTO teams (name, founded_year, stadium_id, league_id, coach_id) VALUES (%s, %s, %s, %s, %s)', 
-                            (name, founded_year, stadium_id, league_id, coach_id))
+                cur.execute('INSERT INTO teams (name, manager_name, stadium_id, league_id) VALUES (%s, %s, %s, %s)', 
+                            (name, manager_name, stadium_id, league_id))
                 flash('Team added successfully', 'success')
             elif 'edit' in request.form and team_id:
-                cur.execute('UPDATE teams SET name = %s, founded_year = %s, stadium_id = %s, league_id = %s, coach_id = %s WHERE team_id = %s', 
-                            (name, founded_year, stadium_id, league_id, coach_id, team_id))
+                cur.execute('UPDATE teams SET name = %s, manager_name = %s, stadium_id = %s, league_id = %s WHERE team_id = %s', 
+                            (name, manager_name, stadium_id, league_id, team_id))
                 flash('Team updated successfully', 'success')
             elif 'delete' in request.form and team_id:
                 cur.execute('DELETE FROM teams WHERE team_id = %s', (team_id,))
@@ -91,13 +90,12 @@ def manage_teams():
     league_id, _ = get_or_create_university_league(cur)
     db.commit()
     cur.execute('''
-        SELECT t.team_id, t.name, t.founded_year, COALESCE(s.name, 'Not set') AS stadium,
-               l.name AS league, COALESCE(c.name, 'Not set') AS coach,
-               t.stadium_id, t.league_id, t.coach_id
+        SELECT t.team_id, t.name, COALESCE(s.name, 'Not set') AS stadium,
+               l.name AS league, t.manager_name,
+               t.stadium_id, t.league_id
         FROM teams t
         LEFT JOIN stadiums s ON t.stadium_id = s.stadium_id
         LEFT JOIN leagues l ON t.league_id = l.league_id
-        LEFT JOIN coaches c ON t.coach_id = c.coach_id
         WHERE t.league_id = %s
         ORDER BY t.name
     ''', (league_id,))
@@ -122,18 +120,15 @@ def manage_players():
             player_id = request.form.get('player_id')
             team_id = request.form['team_id']
             name = request.form['name']
-            position = request.form['position']
-            date_of_birth = request.form['date_of_birth']
-            nationality = request.form['nationality']
 
             if 'submit' in request.form:
                 if player_id:
-                    cur.execute('UPDATE players SET team_id = %s, name = %s, position = %s, date_of_birth = %s, nationality = %s WHERE player_id = %s', 
-                                (team_id, name, position, date_of_birth, nationality, player_id))
+                    cur.execute('UPDATE players SET team_id = %s, name = %s WHERE player_id = %s', 
+                                (team_id, name, player_id))
                     flash('Player updated successfully', 'success')
                 else:
-                    cur.execute('INSERT INTO players (team_id, name, position, date_of_birth, nationality) VALUES (%s, %s, %s, %s, %s)', 
-                                (team_id, name, position, date_of_birth, nationality))
+                    cur.execute('INSERT INTO players (team_id, name) VALUES (%s, %s)', 
+                                (team_id, name))
                     flash('Player added successfully', 'success')
             elif 'delete' in request.form:
                 player_id = request.form['deleteEntityId']
@@ -150,7 +145,7 @@ def manage_players():
     league_id, _ = get_or_create_university_league(cur)
     db.commit()
     cur.execute('''
-        SELECT p.player_id, t.name AS team, p.name, p.position, p.date_of_birth, p.nationality, p.team_id
+        SELECT p.player_id, t.name AS team, p.name, p.team_id
         FROM players p
         JOIN teams t ON p.team_id = t.team_id
         WHERE t.league_id = %s
