@@ -81,55 +81,77 @@ APP_ADMIN_EMAIL=admin@strathmore.edu
 
 `APP_ADMIN_USERNAME`, `APP_ADMIN_PASSWORD`, and `APP_ADMIN_EMAIL` are used by `create-admin.sh` when PostgreSQL initializes a fresh database volume.
 
-## Run With Docker
 
-Start the app and database:
+## Setup & Development Workflows
 
-```sh
-docker compose up --build
-```
+You can run the app using either Docker (recommended for most users) or set up everything locally on your machine. Both workflows are supported and described below.
 
-Open the app:
+### Docker Workflow (Recommended)
 
-```text
-http://localhost:5000
-```
+- Handles all dependencies and database setup automatically.
+- Start the app and database:
 
-The database service runs three initialization files on first creation:
+  ```sh
+  docker compose up --build
+  ```
 
-```text
-0-init-db.sh
-1-schema.sql
-2-create-admin.sh
-```
+- Open the app at: http://localhost:5000
+- The database service runs initialization scripts (`init-db.sh`, `schema.sql`, `create-admin.sh`) on first creation.
+- After startup, log in with the admin credentials from your `.env`.
+- To reset the database, remove the volume:
 
-After startup, log in with the admin credentials from your `.env`.
+  ```sh
+  docker compose down -v
+  docker compose up --build
+  ```
 
-## Fresh Database Reset
+- To seed the database with demo data for development/testing:
 
-PostgreSQL initialization scripts only run when the database volume is created for the first time. If you change `schema.sql`, `create-admin.sh`, or the initial admin credentials and need them applied from scratch, remove the existing volume:
+  ```sh
+  docker compose exec web python seed.py
+  ```
 
-```sh
-docker compose down -v
-docker compose up --build
-```
+### Local Setup Workflow (Windows)
 
+- Use the provided PowerShell script `setup-local-db.ps1` to automate local PostgreSQL setup:
+  1. Creates the required PostgreSQL user and database.
+  2. Loads the schema from `schema.sql`.
+  3. Prints the connection string for your `.env` file.
+- Configure your environment variables in `.env` as described above.
+- The app uses `config.py` to load these variables and provide secure, flexible configuration for Flask and database access.
+- Install dependencies:
 
-This deletes local database data. Use it only when you actually want a fresh development database.
+  ```sh
+  pip install -r requirements.txt
+  ```
 
-## Seeding the Database
+- Start the app with `flask run` after installing dependencies and setting up the database.
+- For local non-Docker runs, set `DATABASE_URL` to a host-accessible PostgreSQL URL, for example:
 
-To populate the database with sample teams, players, fixtures, scores, and player stats, run the provided seed script inside the running Docker container:
+  ```text
+  DATABASE_URL=postgresql://sports_league_owner:sports_league_password@localhost:5432/sports_league
+  ```
 
-```sh
-docker compose exec web python seed.py
-```
+> **Note:** The local setup script is intended for Windows/PowerShell users. For Mac/Linux, set up PostgreSQL manually or use Docker.
 
-This will connect to the running database and insert demo data for development and testing. Ensure the database service is running before executing the command.
+#### Running the PowerShell Setup Script (Windows)
+
+To set up the local PostgreSQL database using PowerShell:
+
+1. Open PowerShell as Administrator.
+2. Navigate to your project directory.
+3. Run the following command:
+
+   ```sh
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+   ./setup-local-db.ps1
+   ```
+
+This will create the database, user, and load the schema automatically. The script will print the connection string to use in your `.env` file.
 
 ## Demo Data Functionality
 
-The admin panel now includes convenient controls to quickly load or clear demo data for demonstrations and testing:
+The admin panel includes convenient controls to quickly load or clear demo data for demonstrations and testing:
 
 - **Load Demo Data**: Instantly populate the league with 10 teams, 100 players, 45 fixtures, and 30 completed matches (with player stats). This is useful for demos or development.
 - **Clear Demo Data**: Remove all teams, players, matches, scores, and player stats, returning the system to a clean state. The league and admin account are preserved.
@@ -137,32 +159,6 @@ The admin panel now includes convenient controls to quickly load or clear demo d
 These actions are available from the admin dashboard UI. No manual script execution is required—just use the buttons provided in the admin panel under "Demo Controls."
 
 > **Note:** Loading demo data will overwrite any existing league data. Use the clear function to reset the system as needed.
-
-## Run Without Docker
-
-Install dependencies:
-
-```sh
-pip install -r requirements.txt
-```
-
-Create a PostgreSQL database, then apply the schema:
-
-```sh
-psql -U your_user -d your_database -f schema.sql
-```
-
-Create an admin manually or run equivalent SQL from `create-admin.sh`. Then start Flask:
-
-```sh
-flask run
-```
-
-For local non-Docker runs, set `DATABASE_URL` to a host-accessible PostgreSQL URL, for example:
-
-```text
-DATABASE_URL=postgresql://sports_league_owner:sports_league_password@localhost:5432/sports_league
-```
 
 ## Admin Workflow
 
