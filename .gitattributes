@@ -1,0 +1,5 @@
+# Ensure all Docker-related files use LF line endings
+*.yml text eol=lf
+*.yaml text eol=lf
+Dockerfile text eol=lf
+*.sh text eol=lf

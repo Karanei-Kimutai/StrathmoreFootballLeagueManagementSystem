@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for, f
 from db import get_db, close_db
 from admin_routes import admin_bp
 from user_routes import user_bp
+from demo_routes import demo_bp
 from config import Config
 import bcrypt
 
@@ -10,6 +11,7 @@ app.secret_key = Config.SECRET_KEY
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(demo_bp)
 
 @app.teardown_appcontext
 def teardown_db(exception):
