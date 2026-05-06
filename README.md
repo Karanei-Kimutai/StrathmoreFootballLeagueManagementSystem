@@ -127,6 +127,17 @@ docker compose exec web python seed.py
 
 This will connect to the running database and insert demo data for development and testing. Ensure the database service is running before executing the command.
 
+## Demo Data Functionality
+
+The admin panel now includes convenient controls to quickly load or clear demo data for demonstrations and testing:
+
+- **Load Demo Data**: Instantly populate the league with 10 teams, 100 players, 45 fixtures, and 30 completed matches (with player stats). This is useful for demos or development.
+- **Clear Demo Data**: Remove all teams, players, matches, scores, and player stats, returning the system to a clean state. The league and admin account are preserved.
+
+These actions are available from the admin dashboard UI. No manual script execution is required—just use the buttons provided in the admin panel under "Demo Controls."
+
+> **Note:** Loading demo data will overwrite any existing league data. Use the clear function to reset the system as needed.
+
 ## Run Without Docker
 
 Install dependencies:
