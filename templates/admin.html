@@ -17,22 +17,79 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="row mt-4">
-                <div class="col-md-6 mb-3">
-                    <a href="{{ url_for('admin.manage_teams') }}" class="btn btn-primary btn-block">Register a Team</a>
+            <!-- League Management -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">League Management</h3>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <a href="{{ url_for('admin.manage_players') }}" class="btn btn-primary btn-block">Add Players</a>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <form method="POST" action="{{ url_for('admin.generate_default_fixtures') }}">
-                        <button type="submit" class="btn btn-outline-primary btn-block">Generate Fixtures</button>
-                    </form>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <a href="{{ url_for('admin.manage_scores') }}" class="btn btn-outline-primary btn-block">Enter Match Result</a>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <a href="{{ url_for('admin.manage_teams') }}" class="btn btn-primary btn-block">
+                                <i class="fa fa-users"></i> Register a Team
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{{ url_for('admin.manage_players') }}" class="btn btn-primary btn-block">
+                                <i class="fa fa-user-plus"></i> Add Players
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <form method="POST" action="{{ url_for('admin.generate_default_fixtures') }}">
+                                <button type="submit" class="btn btn-outline-primary btn-block">
+                                    <i class="fa fa-calendar-plus"></i> Generate Fixtures
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{{ url_for('admin.manage_scores') }}" class="btn btn-outline-primary btn-block">
+                                <i class="fa fa-clipboard-list"></i> Enter Match Result
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Demo Controls -->
+            <div class="card mb-4">
+                <div class="card-header" style="background: var(--strath-blue-900); border-bottom: 3px solid var(--strath-gold);">
+                    <h3 class="mb-0" style="color: white;">
+                        <i class="fa fa-flask"></i> Demo Controls
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p style="color: var(--strath-muted); margin-bottom: 1rem;">
+                        Use these controls to quickly populate the league with sample data for demonstrations,
+                        or wipe it clean to start fresh. Demo data includes 10 teams, 100 players, 45 fixtures,
+                        and 30 completed matches with player stats.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <form method="POST" action="{{ url_for('demo.demo_seed') }}"
+                                  onsubmit="return confirm('This will replace all existing teams, players and matches with demo data. Continue?')">
+                                <button type="submit" class="btn btn-secondary btn-block">
+                                    <i class="fa fa-database"></i> Load Demo Data
+                                </button>
+                            </form>
+                            <small style="color: var(--strath-muted); display: block; margin-top: 0.35rem;">
+                                Loads 10 teams, 100 players, 45 fixtures and 30 results.
+                            </small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <form method="POST" action="{{ url_for('demo.demo_clear') }}"
+                                  onsubmit="return confirm('This will permanently delete all teams, players, matches and scores. Continue?')">
+                                <button type="submit" class="btn btn-outline-danger btn-block">
+                                    <i class="fa fa-trash"></i> Clear Demo Data
+                                </button>
+                            </form>
+                            <small style="color: var(--strath-muted); display: block; margin-top: 0.35rem;">
+                                Removes all teams, players, matches and scores. League and admin account are kept.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <nav class="mt-4">
